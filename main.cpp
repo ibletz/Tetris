@@ -3,21 +3,32 @@
 // tutorial: youtu.be/wVYKG_ch4yM?si=ulDCoMk4-0dbe9ZH
 
 #include "raylib.h"
+#include "grid.h"
 
 int main()
 {
+	Color darkBlue = { 44, 44, 127, 255 };
 	InitWindow(300, 600, "raylib Tetris");
+
+	Grid grid{};
+	grid.grid[0][0] = 1;
+	grid.grid[4][6] = 4;
+	grid.grid[18][8] = 7;
+	grid.print();
+
 
 	SetTargetFPS(60);
 	while (WindowShouldClose() == false)
 	{
 		BeginDrawing();
+		ClearBackground(darkBlue);
 
 		// Event handling
 
 		// Updating states
 
 		// Drawing
+		grid.draw();
 
 		EndDrawing();
 	}
