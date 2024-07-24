@@ -11,9 +11,14 @@ public:
 	Block getRandomBlock();
 	std::vector<Block> getAllBlocks();
 	void draw();
+	void handleInput();
+	void moveBlockLeft();
+	void moveBlockRight();
+	void moveBlockDown();
 	Grid grid;
 
 private:
+	bool isBlockOutside();
 	// vector holds all block types
 	std::vector<Block> blocks;
 	Block currentBlock;

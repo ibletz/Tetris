@@ -38,3 +38,56 @@ void Game::draw()
 	grid.draw();
 	currentBlock.draw();
 }
+
+// detect and handle player input
+void Game::handleInput()
+{
+	int keyPressed = GetKeyPressed();
+	switch (keyPressed)
+	{
+	case KEY_LEFT:
+		moveBlockLeft();
+		break;
+	case KEY_RIGHT:
+		moveBlockRight();
+		break;
+	case KEY_DOWN:
+		moveBlockDown();
+		break;
+	}
+}
+
+// Three methods for moving the block
+void Game::moveBlockLeft()
+{
+	currentBlock.move(0, -1);
+	// undo movement if block ends up out of bounds
+	if (isBlockOutside())
+		currentBlock.move(0, 1);
+}
+void Game::moveBlockRight()
+{
+	currentBlock.move(0, 1);
+	// undo movement if block ends up out of bounds
+	if (isBlockOutside())
+		currentBlock.move(0, -1);
+}
+void Game::moveBlockDown()
+{
+	currentBlock.move(1, 0);
+	// undo movement if block ends up out of bounds
+	if (isBlockOutside())
+		currentBlock.move(-1, 0);
+}
+
+// use grid class function to check if any cells of a block are out of bounds
+bool Game::isBlockOutside()
+{
+	std::vector<Position> tiles = currentBlock.getCellPositions();
+	for (Position item : tiles)
+	{
+		if (grid.isCellOutside(item.row, item.column))
+			return true;
+	}
+	return false;
+}

@@ -44,3 +44,11 @@ void Grid::draw()
 	}
 
 }
+
+// Check for out of bounds cells of a block, return false if cell is in bounds
+bool Grid::isCellOutside(int row, int column)
+{
+	if (row >= 0 && row < numRows && column >= 0 && column < numColumns)
+		return false;
+	return true;
+}

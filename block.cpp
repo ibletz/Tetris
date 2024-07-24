@@ -25,6 +25,7 @@ void Block::move(int rows, int columns)
 	columnOffset += columns;
 }
 
+// return a vector with current cell positions of a block
 std::vector<Position> Block::getCellPositions()
 {
 	std::vector<Position> tiles = cells[rotationState];

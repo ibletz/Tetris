@@ -19,6 +19,7 @@ int main()
 		ClearBackground(darkBlue);
 
 		// Event handling
+		game.handleInput();
 
 		// Updating states
 

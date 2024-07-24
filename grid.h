@@ -7,10 +7,11 @@ class Grid
 {
 public:
 	Grid();
-	int grid[20][10];
 	void Initialize(int value);
 	void print();
 	void draw();
+	bool isCellOutside(int row, int column);
+	int grid[20][10];
 
 private:
 	int numRows{};
