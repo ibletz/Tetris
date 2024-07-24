@@ -38,3 +38,19 @@ std::vector<Position> Block::getCellPositions()
 	}
 	return movedTiles;
 }
+
+// rotate the block through its rotation states
+void Block::rotate()
+{
+	rotationState++;
+	if (rotationState == (int)cells.size())
+		rotationState = 0;
+}
+
+// undo a rotation of the block
+void Block::undoRotation()
+{
+	rotationState--;
+	if (rotationState == -1)
+		rotationState = cells.size() - 1;
+}

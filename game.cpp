@@ -1,5 +1,7 @@
 #include "game.h"
-#include <random>
+#include <cstdlib>
+#include <ctime>
+#include <iostream>
 
 Game::Game()
 {
@@ -18,6 +20,8 @@ Block Game::getRandomBlock()
 		blocks = getAllBlocks();
 
 	// get a random index in the blocks vector
+	// seed random generator to randomize blocks
+	srand((unsigned int)time(NULL));
 	int randomIndex = rand() % blocks.size();
 	// create a new block of random type
 	Block block = blocks[randomIndex];
@@ -53,6 +57,9 @@ void Game::handleInput()
 		break;
 	case KEY_DOWN:
 		moveBlockDown();
+		break;
+	case KEY_UP:
+		rotateBlock();
 		break;
 	}
 }
@@ -90,4 +97,12 @@ bool Game::isBlockOutside()
 			return true;
 	}
 	return false;
+}
+
+// use block class function to rotate blocks
+void Game::rotateBlock()
+{
+	currentBlock.rotate();
+	if (isBlockOutside())
+		currentBlock.undoRotation();
 }
