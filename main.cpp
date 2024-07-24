@@ -14,7 +14,8 @@ int main()
 	Grid grid{};
 	grid.print();
 
-	TBlock block{};
+	IBlock block = IBlock();
+
 
 	SetTargetFPS(60);
 	while (WindowShouldClose() == false)
