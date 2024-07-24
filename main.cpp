@@ -4,6 +4,7 @@
 
 #include "raylib.h"
 #include "grid.h"
+#include "blocks.cpp"
 
 int main()
 {
@@ -11,11 +12,9 @@ int main()
 	InitWindow(300, 600, "raylib Tetris");
 
 	Grid grid{};
-	grid.grid[0][0] = 1;
-	grid.grid[4][6] = 4;
-	grid.grid[18][8] = 7;
 	grid.print();
 
+	TBlock block{};
 
 	SetTargetFPS(60);
 	while (WindowShouldClose() == false)
@@ -29,6 +28,7 @@ int main()
 
 		// Drawing
 		grid.draw();
+		block.draw();
 
 		EndDrawing();
 	}
