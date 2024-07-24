@@ -69,22 +69,25 @@ void Game::moveBlockLeft()
 {
 	currentBlock.move(0, -1);
 	// undo movement if block ends up out of bounds
-	if (isBlockOutside())
+	if (isBlockOutside() || blockFits() == false)
 		currentBlock.move(0, 1);
 }
 void Game::moveBlockRight()
 {
 	currentBlock.move(0, 1);
 	// undo movement if block ends up out of bounds
-	if (isBlockOutside())
+	if (isBlockOutside() || blockFits() == false)
 		currentBlock.move(0, -1);
 }
 void Game::moveBlockDown()
 {
 	currentBlock.move(1, 0);
 	// undo movement if block ends up out of bounds
-	if (isBlockOutside())
+	if (isBlockOutside() || blockFits() == false)
+	{
 		currentBlock.move(-1, 0);
+		LockBlock();
+	}
 }
 
 // use grid class function to check if any cells of a block are out of bounds
@@ -103,6 +106,30 @@ bool Game::isBlockOutside()
 void Game::rotateBlock()
 {
 	currentBlock.rotate();
-	if (isBlockOutside())
+	if (isBlockOutside() || blockFits() == false)
 		currentBlock.undoRotation();
+}
+
+// locks block movement and rotation
+void Game::LockBlock()
+{
+	std::vector<Position> tiles = currentBlock.getCellPositions();
+	for (Position item : tiles)
+	{
+		grid.grid[item.row][item.column] = currentBlock.id;
+	}
+	currentBlock = nextBlock;
+	nextBlock = getRandomBlock();
+}
+
+// check if a block's cells are all on top of empty grid cells.
+bool Game::blockFits()
+{
+	std::vector<Position> tiles = currentBlock.getCellPositions();
+	for (Position item : tiles)
+	{
+		if (grid.isCellEmpty(item.row, item.column) == false)
+			return false;
+	}
+	return true;
 }

@@ -20,6 +20,9 @@ public:
 private:
 	bool isBlockOutside();
 	void rotateBlock();
+	void LockBlock();
+	// check cells of a block to see if they are on top of empty grid cells
+	bool blockFits();
 	// vector holds all block types
 	std::vector<Block> blocks;
 	Block currentBlock;
