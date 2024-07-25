@@ -24,5 +24,4 @@ private:
 	std::vector<Color> colors;
 	int rowOffset;
 	int columnOffset;
-
 };

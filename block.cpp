@@ -7,8 +7,10 @@ Block::Block()
 	colors = GetCellColors();
 	rowOffset = 0;
 	columnOffset = 0;
+	id = 0;
 }
 
+// draw all the cells of the block
 void Block::draw()
 {
 	std::vector<Position> tiles = getCellPositions();

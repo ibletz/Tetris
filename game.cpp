@@ -64,7 +64,7 @@ void Game::handleInput()
 	}
 }
 
-// Three methods for moving the block
+// Three methods for moving the block left, right, and down
 void Game::moveBlockLeft()
 {
 	currentBlock.move(0, -1);
@@ -110,7 +110,7 @@ void Game::rotateBlock()
 		currentBlock.undoRotation();
 }
 
-// locks block movement and rotation
+// locks block movement and rotation, then checks for completed rows with clearFullRows()
 void Game::LockBlock()
 {
 	std::vector<Position> tiles = currentBlock.getCellPositions();
@@ -120,6 +120,7 @@ void Game::LockBlock()
 	}
 	currentBlock = nextBlock;
 	nextBlock = getRandomBlock();
+	grid.ClearFullRows();
 }
 
 // check if a block's cells are all on top of empty grid cells.
