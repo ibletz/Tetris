@@ -10,6 +10,7 @@ Game::Game()
 	currentBlock = getRandomBlock();
 	nextBlock = getRandomBlock();
 	gameOver = false;
+	score = 0;
 }
 
 // select a random block to appear next
@@ -65,6 +66,7 @@ void Game::handleInput()
 		break;
 	case KEY_DOWN:
 		moveBlockDown();
+		updateScore(0, 1);
 		break;
 	case KEY_UP:
 		rotateBlock();
@@ -145,7 +147,8 @@ void Game::LockBlock()
 		gameOver = true;
 	}
 	nextBlock = getRandomBlock();
-	grid.ClearFullRows();
+	int rowsCleared = grid.ClearFullRows();
+	updateScore(rowsCleared, 10);
 }
 
 // check if a block's cells are all on top of empty grid cells.
@@ -167,4 +170,27 @@ void Game::Reset()
 	blocks = getAllBlocks();
 	currentBlock = getRandomBlock();
 	nextBlock = getRandomBlock();
+	score = 0;
+}
+
+// update score according to lines cleared and blockes placed
+void Game::updateScore(int linesCleared, int moveDownPoints)
+{
+	switch (linesCleared)
+	{
+	case 1:
+		score += 100;
+		break;
+	case 2:
+		score += 250;
+		break;
+	case 3:
+		score += 400;
+		break;
+	case 4:
+		score += 500;
+	default:
+		break;
+	}
+	score += moveDownPoints;
 }

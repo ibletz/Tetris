@@ -2,6 +2,7 @@
 // IbletzFuller 2024/07/23
 // tutorial: youtu.be/wVYKG_ch4yM?si=ulDCoMk4-0dbe9ZH
 
+#include <iostream>
 #include "raylib.h"
 #include "game.h"
 #include "colors.h"
@@ -42,20 +43,27 @@ int main()
 		// Drawing
 		BeginDrawing();
 		ClearBackground(darkBlue);
-		
+
 		// UI Elements
 		DrawTextEx(font, "Score", { 365, 15 }, 38, 2, WHITE);
 		DrawRectangleRounded({ 320, 55, 170, 60 }, 0.3, 6, lightBlue);
+
+		char scoreText[10];
+		sprintf_s(scoreText, "%d", game.score);
+		Vector2 textSize = MeasureTextEx(font, scoreText, 38, 2);
+
+		DrawTextEx(font, scoreText, { 320 + (170 - textSize.x) / 2, 65 }, 38, 2, WHITE);
+
 		DrawTextEx(font, "Next", { 370, 175 }, 38, 2, WHITE);
 		DrawRectangleRounded({ 320, 215, 170, 180 }, 0.3, 6, lightBlue);
-		if(game.gameOver)
+		if (game.gameOver)
 			DrawTextEx(font, "Game Over", { 320, 450 }, 38, 2, WHITE);
 
 		game.draw();
 
 		EndDrawing();
 	}
-	
+
 	CloseWindow();
 	return 0;
 }
