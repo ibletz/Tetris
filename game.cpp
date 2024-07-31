@@ -9,6 +9,7 @@ Game::Game()
 	blocks = getAllBlocks();
 	currentBlock = getRandomBlock();
 	nextBlock = getRandomBlock();
+	gameOver = false;
 }
 
 // select a random block to appear next
@@ -67,26 +68,35 @@ void Game::handleInput()
 // Three methods for moving the block left, right, and down
 void Game::moveBlockLeft()
 {
-	currentBlock.move(0, -1);
-	// undo movement if block ends up out of bounds
-	if (isBlockOutside() || blockFits() == false)
-		currentBlock.move(0, 1);
+	if (!gameOver)
+	{
+		currentBlock.move(0, -1);
+		// undo movement if block ends up out of bounds
+		if (isBlockOutside() || blockFits() == false)
+			currentBlock.move(0, 1);
+	}
 }
 void Game::moveBlockRight()
 {
-	currentBlock.move(0, 1);
-	// undo movement if block ends up out of bounds
-	if (isBlockOutside() || blockFits() == false)
-		currentBlock.move(0, -1);
+	if (!gameOver)
+	{
+		currentBlock.move(0, 1);
+		// undo movement if block ends up out of bounds
+		if (isBlockOutside() || blockFits() == false)
+			currentBlock.move(0, -1);
+	}
 }
 void Game::moveBlockDown()
 {
-	currentBlock.move(1, 0);
-	// undo movement if block ends up out of bounds
-	if (isBlockOutside() || blockFits() == false)
+	if (!gameOver)
 	{
-		currentBlock.move(-1, 0);
-		LockBlock();
+		currentBlock.move(1, 0);
+		// undo movement if block ends up out of bounds
+		if (isBlockOutside() || blockFits() == false)
+		{
+			currentBlock.move(-1, 0);
+			LockBlock();
+		}
 	}
 }
 
@@ -105,9 +115,12 @@ bool Game::isBlockOutside()
 // use block class function to rotate blocks
 void Game::rotateBlock()
 {
-	currentBlock.rotate();
-	if (isBlockOutside() || blockFits() == false)
-		currentBlock.undoRotation();
+	if (!gameOver)
+	{
+		currentBlock.rotate();
+		if (isBlockOutside() || blockFits() == false)
+			currentBlock.undoRotation();
+	}
 }
 
 // locks block movement and rotation, then checks for completed rows with clearFullRows()
@@ -119,6 +132,11 @@ void Game::LockBlock()
 		grid.grid[item.row][item.column] = currentBlock.id;
 	}
 	currentBlock = nextBlock;
+	// check for game over if new block does not fit on the grid
+	if (blockFits() == false)
+	{
+		gameOver = true;
+	}
 	nextBlock = getRandomBlock();
 	grid.ClearFullRows();
 }

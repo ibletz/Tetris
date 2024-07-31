@@ -16,6 +16,7 @@ public:
 	void moveBlockRight();
 	void moveBlockDown();
 	Grid grid;
+	bool gameOver;
 
 private:
 	bool isBlockOutside();
