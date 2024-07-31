@@ -4,6 +4,7 @@
 
 #include "raylib.h"
 #include "game.h"
+#include "colors.h"
 
 // global variable to keep track of last game update
 double lastUpdateTime{};
@@ -21,16 +22,15 @@ bool EventTriggered(double interval)
 
 int main()
 {
-	Color darkBlue = { 44, 44, 127, 255 };
-	InitWindow(300, 600, "raylib Tetris");
+	InitWindow(500, 620, "raylib Tetris");
+
+	Font font = LoadFontEx("Font/monogram.ttf", 64, 0, 0);
 
 	Game game = Game();
 
 	SetTargetFPS(60);
 	while (WindowShouldClose() == false)
 	{
-		BeginDrawing();
-		ClearBackground(darkBlue);
 
 		// Event handling
 		game.handleInput();
@@ -40,6 +40,17 @@ int main()
 			game.moveBlockDown();
 
 		// Drawing
+		BeginDrawing();
+		ClearBackground(darkBlue);
+		
+		// UI Elements
+		DrawTextEx(font, "Score", { 365, 15 }, 38, 2, WHITE);
+		DrawRectangleRounded({ 320, 55, 170, 60 }, 0.3, 6, lightBlue);
+		DrawTextEx(font, "Next", { 370, 175 }, 38, 2, WHITE);
+		DrawRectangleRounded({ 320, 215, 170, 180 }, 0.3, 6, lightBlue);
+		if(game.gameOver)
+			DrawTextEx(font, "Game Over", { 320, 450 }, 38, 2, WHITE);
+
 		game.draw();
 
 		EndDrawing();
