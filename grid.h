@@ -7,7 +7,7 @@ class Grid
 {
 public:
 	Grid();
-	void Initialize(int value);
+	void Initialize();
 	void print();
 	void draw();
 	bool isCellOutside(int row, int column);

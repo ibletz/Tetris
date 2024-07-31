@@ -25,6 +25,7 @@ private:
 	// check cells of a block to see if they are on top of empty grid cells
 	bool blockFits();
 	// vector holds all block types
+	void Reset();
 	std::vector<Block> blocks;
 	Block currentBlock;
 	Block nextBlock;

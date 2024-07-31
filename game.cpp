@@ -48,6 +48,13 @@ void Game::draw()
 void Game::handleInput()
 {
 	int keyPressed = GetKeyPressed();
+
+	// check for game state reset upon gameover
+	if (gameOver && keyPressed != 0)
+	{
+		gameOver = false;
+		Reset();
+	}
 	switch (keyPressed)
 	{
 	case KEY_LEFT:
@@ -151,4 +158,13 @@ bool Game::blockFits()
 			return false;
 	}
 	return true;
+}
+
+// reset game state and grid for next game
+void Game::Reset()
+{
+	grid.Initialize();
+	blocks = getAllBlocks();
+	currentBlock = getRandomBlock();
+	nextBlock = getRandomBlock();
 }

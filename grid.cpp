@@ -6,12 +6,12 @@ Grid::Grid()
 	numRows = 20;
 	numColumns = 10;
 	cellSize = 30;
-	Initialize(0);
+	Initialize();
 	colors = GetCellColors();
 }
 
-// Initialize all cells of the grid
-void Grid::Initialize(int value)
+// Initialize all cells of the grid to empty
+void Grid::Initialize()
 {
 	for (int row = 0; row < numRows; row++)
 		for (int column = 0; column < numColumns; column++)
