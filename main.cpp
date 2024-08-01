@@ -32,7 +32,7 @@ int main()
 	SetTargetFPS(60);
 	while (WindowShouldClose() == false)
 	{
-
+		UpdateMusicStream(game.music);
 		// Event handling
 		game.handleInput();
 
@@ -51,7 +51,6 @@ int main()
 		char scoreText[10];
 		sprintf_s(scoreText, "%d", game.score);
 		Vector2 textSize = MeasureTextEx(font, scoreText, 38, 2);
-
 		DrawTextEx(font, scoreText, { 320 + (170 - textSize.x) / 2, 65 }, 38, 2, WHITE);
 
 		DrawTextEx(font, "Next", { 370, 175 }, 38, 2, WHITE);

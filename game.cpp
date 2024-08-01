@@ -11,6 +11,20 @@ Game::Game()
 	nextBlock = getRandomBlock();
 	gameOver = false;
 	score = 0;
+	InitAudioDevice();
+	music = LoadMusicStream("Sounds/theme.mp3");
+	PlayMusicStream(music);
+	rotateSound = LoadSound("Sounds/rotate.wav");
+	clearSound = LoadSound("Sounds/clear.wav");
+	lockSound = LoadSound("Sounds/lock.wav");
+}
+
+Game::~Game()
+{
+	CloseAudioDevice();
+	UnloadMusicStream(music);
+	UnloadSound(rotateSound);
+	UnloadSound(clearSound);
 }
 
 // select a random block to appear next
@@ -42,7 +56,20 @@ std::vector<Block> Game::getAllBlocks()
 void Game::draw()
 {
 	grid.draw();
-	currentBlock.draw();
+	currentBlock.draw(11, 11);
+	// special offsets to center all next blocks
+	switch (nextBlock.id)
+	{
+	case 3: // I block
+		nextBlock.draw(255, 285);
+		break;
+	case 4:	// O block
+		nextBlock.draw(255, 270);
+		break;
+	default: // all other blocks
+		nextBlock.draw(270, 270);
+		break;
+	}
 }
 
 // detect and handle player input
@@ -129,6 +156,8 @@ void Game::rotateBlock()
 		currentBlock.rotate();
 		if (isBlockOutside() || blockFits() == false)
 			currentBlock.undoRotation();
+		else
+			PlaySound(rotateSound);
 	}
 }
 
@@ -148,7 +177,13 @@ void Game::LockBlock()
 	}
 	nextBlock = getRandomBlock();
 	int rowsCleared = grid.ClearFullRows();
-	updateScore(rowsCleared, 10);
+	if (rowsCleared > 0)
+	{
+		PlaySound(clearSound);
+		updateScore(rowsCleared, 0);
+	}
+	else
+		PlaySound(lockSound);
 }
 
 // check if a block's cells are all on top of empty grid cells.
